@@ -1,4 +1,0 @@
-[submodule "UENO-LEILAO-Backend"]
-    path = backend_flask
-    url = https://github.com/davidteste890/UENO-LEILAO-Backend.git
-
