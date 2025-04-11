@@ -16,7 +16,7 @@ function Cadastro() {
     setErro("");
 
     try {
-      const response = await axios.post("https://ueno-leilao-backend.onrender.com/api/cadastrar", form);
+      const response = await axios.post("http://localhost:5000/api/cadastrar", form);
       alert(response.data.mensagem);
       navigate("/login");
     } catch (err) {

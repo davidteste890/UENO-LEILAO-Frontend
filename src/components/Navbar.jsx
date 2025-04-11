@@ -1,28 +1,23 @@
-import { Link } from 'react-router-dom';
-import { FaGavel } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="bg-green-600 text-white p-4 shadow">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between">
+    <nav className="bg-green-700 text-white px-6 py-4 shadow">
+      <div className="flex justify-between items-center">
         <div>
-          <Link to="/" className="text-2xl font-bold flex items-center gap-2">
-            <FaGavel className="w-6 h-6" />
-            UENO LEILÕES
-          </Link>
-          <p className="text-xs sm:text-sm mt-1 text-white whitespace-normal">
-            ARREMATE COM A UENO LEILÕES – Produtos apreendidos pela Receita Federal na Ponte Internacional da Amizade
-          </p>
+          <Link to="/" className="text-2xl font-bold">UENO LEILÃO</Link>
         </div>
-        <div className="mt-2 sm:mt-0 flex gap-4">
+        <div className="space-x-4">
+          <Link to="/" className="hover:underline">Home</Link>
           <Link to="/login" className="hover:underline">Login</Link>
           <Link to="/cadastro" className="hover:underline">Cadastro</Link>
           <Link to="/perfil" className="hover:underline">Perfil</Link>
+          <Link to="/produtos" className="hover:underline">Produtos</Link>
         </div>
       </div>
+      <p className="mt-2 text-sm text-center text-green-200">🚀 Dê seu lance e conquiste os melhores eletrônicos com o melhor preço!</p>
     </nav>
-  )
+  );
 }
 
 export default Navbar;
-

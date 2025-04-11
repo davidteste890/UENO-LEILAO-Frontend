@@ -1,21 +1,15 @@
-import React from "react";
+import HomepageHero from "../components/HomepageHero";
 
-const Home = () => {
+export default function Home() {
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold text-green-800 text-center mb-4">
-        UENO LEILÃO
-      </h1>
+    <main className="p-6 space-y-10">
+      <HomepageHero />
 
-      <h2 className="text-xl font-bold text-green-700 text-center mt-4">
-        MUITOS PRODUTOS APREENDIDOS PELA RECEITA FEDERAL VÃO SER LEILOADOS EM NOSSO SITE.
-        <br />
-        <span className="text-green-900 animate-bounce text-2xl font-extrabold">
-          SEJA UM ARREMATANTE!
-        </span>
-      </h2>
-    </div>
+      {/* Em breve: seção de produtos em destaque */}
+      <section className="text-center mt-10">
+        <h2 className="text-2xl font-semibold text-green-800 mb-4">Produtos em Destaque</h2>
+        <p className="text-gray-600">Em breve você verá aqui os melhores eletrônicos disponíveis!</p>
+      </section>
+    </main>
   );
-};
-
-export default Home;
+}

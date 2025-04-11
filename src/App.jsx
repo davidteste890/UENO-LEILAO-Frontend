@@ -1,31 +1,31 @@
-import Sidebar from './components/Sidebar'
-// ... outros imports
+// src/App.jsx
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
+import Perfil from "./pages/Perfil";
+import Layout from "./components/Layout";
+import { useEffect } from "react";
 
 function App() {
-  const isLoggedIn = localStorage.getItem('token') !== null
+  // Protege a rota do perfil se não tiver token
+  const isAutenticado = !!localStorage.getItem("token");
+
+  useEffect(() => {
+    // Aqui você pode futuramente verificar o token com o backend se quiser
+  }, []);
 
   return (
-    <AuthProvider>
-      <Router>
-        <Navbar />
-        <div className="flex">
-          {isLoggedIn && <Sidebar />}
-          <div className={`flex-1 ${isLoggedIn ? 'ml-64' : ''} mt-16 p-4`}>
-            <Routes>
-              <Route path="/" element={<PrivateRoute><Produtos /></PrivateRoute>} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/cadastro" element={<Cadastro />} />
-              <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
-              {/* Rotas das categorias */}
-              <Route path="/categoria/lotes" element={<PrivateRoute><Produtos tipo="lotes" /></PrivateRoute>} />
-              <Route path="/categoria/liberados" element={<PrivateRoute><Produtos tipo="liberados" /></PrivateRoute>} />
-              <Route path="/categoria/embreve" element={<PrivateRoute><Produtos tipo="embreve" /></PrivateRoute>} />
-            </Routes>
-          </div>
-        </div>
-      </Router>
-    </AuthProvider>
-  )
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="cadastro" element={<Cadastro />} />
+        {isAutenticado && <Route path="perfil" element={<Perfil />} />}
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;
+

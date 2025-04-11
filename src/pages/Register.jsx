@@ -1,97 +1,94 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-export default function Register() {
-  const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-    telefone: "",
-  });
-  const [erro, setErro] = useState("");
-  const navigate = useNavigate();
+function Register() {
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    senha: '',
+    telefone: ''
+  })
+
+  const [erro, setErro] = useState(null)
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErro("");
+    e.preventDefault()
+    setErro(null)
 
     try {
-      const response = await fetch("http://localhost:5000/api/cadastrar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Cadastro realizado com sucesso!");
-        navigate("/login");
-      } else {
-        setErro(data.mensagem || "Erro ao cadastrar");
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erro no cadastro')
       }
-    } catch (err) {
-      setErro("Erro na conexão com o servidor");
+
+      alert('Cadastro realizado com sucesso!')
+      navigate('/login')
+    } catch (error) {
+      setErro(error.message)
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-center text-green-700">Cadastro</h2>
-
-        {erro && <p className="text-red-500 mb-4 text-center">{erro}</p>}
-
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h2 className="text-2xl font-bold mb-4 text-center">Cadastrar</h2>
+      {erro && <p className="text-red-600 mb-4">{erro}</p>}
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           name="nome"
           placeholder="Nome"
-          className="w-full p-2 mb-4 border rounded"
-          value={form.nome}
+          value={formData.nome}
           onChange={handleChange}
+          className="w-full p-2 border rounded"
           required
         />
         <input
           type="email"
           name="email"
-          placeholder="Email"
-          className="w-full p-2 mb-4 border rounded"
-          value={form.email}
+          placeholder="E-mail"
+          value={formData.email}
           onChange={handleChange}
+          className="w-full p-2 border rounded"
           required
         />
         <input
           type="password"
           name="senha"
           placeholder="Senha"
-          className="w-full p-2 mb-4 border rounded"
-          value={form.senha}
+          value={formData.senha}
           onChange={handleChange}
+          className="w-full p-2 border rounded"
           required
         />
         <input
           type="text"
           name="telefone"
           placeholder="Telefone"
-          className="w-full p-2 mb-6 border rounded"
-          value={form.telefone}
+          value={formData.telefone}
           onChange={handleChange}
+          className="w-full p-2 border rounded"
         />
-
         <button
           type="submit"
-          className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700 transition"
+          className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"
         >
           Cadastrar
         </button>
       </form>
     </div>
-  );
+  )
 }
+
+export default Register
+
